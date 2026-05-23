@@ -1,6 +1,6 @@
 ---
 title: "CopilotKit $27M · Karpathy skills · Vibedock — AI 에이전트가 챗봇이 아니라 인프라가 되는 주"
-date: 2026-05-24T18:00:00+09:00
+date: 2026-05-23T22:00:00+09:00
 draft: false
 tags: ["AI", "AI 에이전트", "CopilotKit", "AG-UI", "주간레이더"]
 categories: ["AI 레이더"]
