@@ -1,0 +1,65 @@
+baseURL: "https://moonsu1627.github.io/"
+languageCode: "ko"
+title: "moonsu studio"
+theme: "PaperMod"
+pagination:
+  pagerSize: 10
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+params:
+  env: production
+  description: "AI·스타트업 시그널을 수집·랭킹·검증해 차분한 분석 콘텐츠로 발행하는 signal-driven 콘텐츠 스튜디오"
+  author: "moonsu"
+
+  defaultTheme: "auto"
+  disableThemeToggle: false
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowToc: true
+  TocOpen: false
+  ShowWordCount: true
+
+  homeInfoParams:
+    Title: "moonsu studio"
+    Content: |-
+      AI·스타트업 시그널 라이브 분석.
+
+      차분·분석적·과장 없음. 출처·데이터 우선.
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/moonsu1627"
+
+  assets:
+    favicon: "favicon.ico"
+
+menu:
+  main:
+    - identifier: posts
+      name: 글
+      url: /posts/
+      weight: 1
+    - identifier: archives
+      name: 아카이브
+      url: /archives/
+      weight: 2
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: github
+    lineNos: false
