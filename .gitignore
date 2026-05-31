@@ -4,3 +4,16 @@ resources/
 .DS_Store
 *.log
 node_modules/
+
+# secrets — 절대 commit 금지
+*.env
+.env*
+*.api-key
+*.api_key
+*.token
+*.pat
+.secrets/
+secrets/
+credentials.json
+*-credentials.json
+service-account*.json

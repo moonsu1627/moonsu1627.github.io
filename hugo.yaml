@@ -9,6 +9,10 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
+ignoreFiles:
+  - "^_publish/"
+  - "^\\.github/"
+
 params:
   env: production
   description: "AI·스타트업 시그널을 수집·랭킹·검증해 차분한 분석 콘텐츠로 발행하는 signal-driven 콘텐츠 스튜디오"

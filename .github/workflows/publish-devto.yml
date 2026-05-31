@@ -1,0 +1,107 @@
+name: Publish to dev.to (cron)
+
+on:
+  schedule:
+    # UTC 00:00 = KST 09:00, every Mon/Wed/Fri
+    - cron: '0 0 * * 1,3,5'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry-run (no dev.to POST, no queue commit)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Pick next ready entry and publish
+        id: pub
+        shell: pwsh
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $queuePath = '_publish/queue.json'
+          $queue = Get-Content -Raw $queuePath -Encoding UTF8 | ConvertFrom-Json
+
+          $now = [DateTime]::UtcNow
+          $target = $null
+          foreach ($entry in $queue.queue) {
+            if ($entry.status -ne 'ready') { continue }
+            if ($entry.scheduled_for) {
+              $sched = [DateTime]::Parse($entry.scheduled_for, $null, [System.Globalization.DateTimeStyles]::RoundtripKind)
+              if ($sched -gt $now) { continue }
+            }
+            $target = $entry
+            break
+          }
+
+          if (-not $target) {
+            Write-Host 'no ready entry due. skipping.'
+            "skipped=true" | Out-File -Append -FilePath $env:GITHUB_OUTPUT
+            exit 0
+          }
+
+          Write-Host ('target: cycle{0} ({1})' -f $target.cycle_number, $target.title)
+
+          $tags = @()
+          if ($target.tags) { $tags = @($target.tags) }
+
+          $publishScript = '_publish/scripts/publish-devto.ps1'
+          $scriptArgs = @{
+            ArticlePath  = $target.article_en_path
+            CanonicalUrl = $target.canonical_url
+            MainImage    = $target.main_image_url
+          }
+          if ($tags.Count -gt 0) { $scriptArgs.Tags = $tags }
+
+          if ($env:DRY_RUN -eq 'true') {
+            $scriptArgs.DryRun = $true
+            & $publishScript @scriptArgs
+            Write-Host '[dry-run] not committing queue.'
+            "skipped=true" | Out-File -Append -FilePath $env:GITHUB_OUTPUT
+            exit 0
+          }
+
+          $scriptArgs.Publish = $true
+          & $publishScript @scriptArgs
+
+          if (-not (Test-Path '.devto-last-response.json')) {
+            throw 'no .devto-last-response.json — publish may have failed silently'
+          }
+          $resp = Get-Content -Raw '.devto-last-response.json' -Encoding UTF8 | ConvertFrom-Json
+
+          $target | Add-Member -NotePropertyName status       -NotePropertyValue 'published' -Force
+          $target | Add-Member -NotePropertyName devto_url    -NotePropertyValue $resp.url   -Force
+          $target | Add-Member -NotePropertyName devto_id     -NotePropertyValue $resp.id    -Force
+          $target | Add-Member -NotePropertyName published_at -NotePropertyValue ([DateTime]::UtcNow.ToString('yyyy-MM-ddTHH:mm:ssZ')) -Force
+
+          $queue | ConvertTo-Json -Depth 10 | Set-Content $queuePath -Encoding UTF8
+
+          Write-Host ('cycle{0} published. url={1}' -f $target.cycle_number, $resp.url)
+          "skipped=false" | Out-File -Append -FilePath $env:GITHUB_OUTPUT
+
+      - name: Commit queue update
+        if: steps.pub.outputs.skipped != 'true'
+        shell: bash
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _publish/queue.json
+          if git diff --cached --quiet; then
+            echo "no queue changes"
+          else
+            git commit -m "auto: publish cycle, queue updated"
+            git push
+          fi
