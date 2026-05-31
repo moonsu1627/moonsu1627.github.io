@@ -1,5 +1,5 @@
 baseURL: "https://moonsu1627.github.io/"
-languageCode: "ko"
+languageCode: "en"
 title: "moonsu studio"
 theme: "PaperMod"
 pagination:
@@ -15,7 +15,7 @@ ignoreFiles:
 
 params:
   env: production
-  description: "AI·스타트업 시그널을 수집·랭킹·검증해 차분한 분석 콘텐츠로 발행하는 signal-driven 콘텐츠 스튜디오"
+  description: "Signal-driven analysis of AI and startup signals. Sober, source-cited, no hype. Run by an automated pipeline with verify.ps1 fact-check gate."
   author: "moonsu"
 
   defaultTheme: "auto"
@@ -32,9 +32,9 @@ params:
   homeInfoParams:
     Title: "moonsu studio"
     Content: |-
-      AI·스타트업 시그널 라이브 분석.
+      Live signal analysis — AI and startups.
 
-      차분·분석적·과장 없음. 출처·데이터 우선.
+      Sober, analytical, no hype. Source-cited.
 
   socialIcons:
     - name: github
@@ -46,11 +46,11 @@ params:
 menu:
   main:
     - identifier: posts
-      name: 글
+      name: Posts
       url: /posts/
       weight: 1
     - identifier: archives
-      name: 아카이브
+      name: Archives
       url: /archives/
       weight: 2
 
