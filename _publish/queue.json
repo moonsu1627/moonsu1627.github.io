@@ -1,22 +1,51 @@
-{
-  "_doc": "moonsu studio publish queue. GitHub Actions cron picks the next entry with status='ready' on its schedule. cycle 완료 시 add-to-queue.ps1 으로 entry 추가.",
-  "_schema_version": 1,
-  "_status_enum": ["ready", "published", "failed", "skipped"],
-  "queue": [
-    {
-      "id": "cycle5",
-      "cycle_number": 5,
-      "title": "CopilotKit's $27M, Karpathy's skills repo, Vibedock — the week AI agents stopped being chatbots",
-      "article_en_path": "_publish/articles/cycle5-en.md",
-      "main_image_url": "https://moonsu1627.github.io/images/cycle5/slides.001.png",
-      "canonical_url": "https://moonsu1627.github.io/posts/2026-05-24-ai-agents-infrastructure/",
-      "tags": ["ai", "agents", "copilotkit", "agui"],
-      "status": "published",
-      "scheduled_for": null,
-      "published_at": "2026-05-31T19:00:36Z",
-      "devto_url": "https://dev.to/moonsu1627/copilotkits-27m-karpathys-skills-repo-vibedock-the-week-ai-agents-stopped-being-chatbots-2899",
-      "devto_id": 3790878,
-      "note": "first cycle, manually published 2026-05-31. recorded here for schema validation and audit trail."
-    }
-  ]
+﻿{
+    "_doc":  "moonsu studio publish queue. GitHub Actions cron picks the next entry with status=\u0027ready\u0027 on its schedule. cycle 완료 시 add-to-queue.ps1 으로 entry 추가.",
+    "_schema_version":  1,
+    "_status_enum":  [
+                         "ready",
+                         "published",
+                         "failed",
+                         "skipped"
+                     ],
+    "queue":  [
+                  {
+                      "id":  "cycle5",
+                      "cycle_number":  5,
+                      "title":  "CopilotKit\u0027s $27M, Karpathy\u0027s skills repo, Vibedock — the week AI agents stopped being chatbots",
+                      "article_en_path":  "_publish/articles/cycle5-en.md",
+                      "main_image_url":  "https://moonsu1627.github.io/images/cycle5/slides.001.png",
+                      "canonical_url":  "https://moonsu1627.github.io/posts/2026-05-24-ai-agents-infrastructure/",
+                      "tags":  [
+                                   "ai",
+                                   "agents",
+                                   "copilotkit",
+                                   "agui"
+                               ],
+                      "status":  "published",
+                      "scheduled_for":  null,
+                      "published_at":  "2026-05-31T19:00:36Z",
+                      "devto_url":  "https://dev.to/moonsu1627/copilotkits-27m-karpathys-skills-repo-vibedock-the-week-ai-agents-stopped-being-chatbots-2899",
+                      "devto_id":  3790878,
+                      "note":  "first cycle, manually published 2026-05-31. recorded here for schema validation and audit trail."
+                  },
+                  {
+                      "id":  "cycle6",
+                      "cycle_number":  6,
+                      "title":  "Supermemory, Parallel, markitdown — the week AI agent infrastructure unbundled into sub-layers",
+                      "article_en_path":  "_publish/articles/cycle6-en.md",
+                      "main_image_url":  "https://moonsu1627.github.io/images/cycle6/slides.001.png",
+                      "canonical_url":  "https://moonsu1627.github.io/posts/2026-06-01-ai-agent-sublayer-unbundle/",
+                      "tags":  [
+                                   "ai",
+                                   "agents",
+                                   "memory",
+                                   "supermemory"
+                               ],
+                      "status":  "ready",
+                      "scheduled_for":  "2026-06-01T00:00:00Z",
+                      "published_at":  null,
+                      "devto_url":  null,
+                      "devto_id":  null
+                  }
+              ]
 }
