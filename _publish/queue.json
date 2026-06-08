@@ -98,11 +98,11 @@
         "llm",
         "indiedev"
       ],
-      "status": "ready",
       "scheduled_for": "2026-06-08T00:00:00Z",
-      "published_at": null,
-      "devto_url": null,
-      "devto_id": null
+      "status": "published",
+      "devto_url": "https://dev.to/moonsu1627/kvarn-costdev-headroom-the-week-the-agent-runtime-bill-got-itemized-4jh4",
+      "devto_id": 3845182,
+      "published_at": "2026-06-08T04:15:19Z"
     }
   ]
 }
